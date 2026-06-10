@@ -32,7 +32,10 @@ export default async function ClientSupportPage() {
 
         {/* Message Input */}
         <div className="p-4 border-t border-gray-200 bg-white rounded-b-lg">
-          <form action={sendTicket} className="flex gap-4">
+          <form action={async (formData) => {
+            "use server";
+            await sendTicket(formData);
+          }} className="flex gap-4">
             <input type="hidden" name="clientId" value={session.id} />
             <input type="hidden" name="senderRole" value="client" />
             <div className="flex-1 space-y-2">

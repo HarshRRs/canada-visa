@@ -5,7 +5,7 @@ import { loginAction } from "@/app/actions/auth";
 import { Lock, Mail, AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
-  const [state, formAction, isPending] = useActionState(loginAction as any, null);
+  const [state, formAction, isPending] = useActionState(loginAction, { error: "" });
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

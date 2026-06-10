@@ -61,16 +61,11 @@ export function initDB() {
     );
   `);
 
-  // Insert default admin if it doesn't exist
-  const adminQuery = db.prepare('SELECT * FROM users WHERE email = ?');
-  const admin = adminQuery.get('jainhatu@gmail.com');
-  
-  if (!admin) {
-    const bcrypt = require('bcryptjs');
-    const hash = bcrypt.hashSync('Harsh@123', 10);
-    const insertAdmin = db.prepare('INSERT INTO users (id, email, password, role, name) VALUES (?, ?, ?, ?, ?)');
-    insertAdmin.run('admin-1', 'jainhatu@gmail.com', hash, 'admin', 'Admin');
-  }
+  // Insert default admin if it doesn't exist (using INSERT OR IGNORE for safe concurrency)
+  const bcrypt = require('bcryptjs');
+  const hash = bcrypt.hashSync('Harsh@123', 10);
+  const insertAdmin = db.prepare('INSERT OR IGNORE INTO users (id, email, password, role, name) VALUES (?, ?, ?, ?, ?)');
+  insertAdmin.run('admin-1', 'jainhatu@gmail.com', hash, 'admin', 'Admin');
 }
 
 // Call initDB immediately so tables are created on startup
