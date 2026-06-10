@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { CheckCircle2, ChevronRight, ChevronLeft, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { submitEligibility } from "@/app/actions/submissions";
 
 export default function EligibilityChecker() {
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   
   const [formData, setFormData] = useState({
@@ -25,13 +27,19 @@ export default function EligibilityChecker() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 3) {
       setStep(step + 1);
     } else {
-      // Simulate submission
-      router.push("/success");
+      setIsSubmitting(true);
+      try {
+        await submitEligibility(formData);
+        router.push("/success");
+      } catch (error) {
+        console.error(error);
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -194,10 +202,11 @@ export default function EligibilityChecker() {
             </button>
             <button
               type="submit"
-              className="flex items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
+              disabled={isSubmitting}
+              className="flex items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors disabled:opacity-50"
             >
               {step === 3 ? (
-                <>Submit Assessment <Send className="w-4 h-4 ml-2" /></>
+                <>{isSubmitting ? "Submitting..." : "Submit Assessment"} <Send className="w-4 h-4 ml-2" /></>
               ) : (
                 <>Next Step <ChevronRight className="w-4 h-4 ml-1" /></>
               )}

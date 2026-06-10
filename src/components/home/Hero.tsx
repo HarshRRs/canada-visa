@@ -56,9 +56,9 @@ export default function Hero() {
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50">
         <div className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center relative overflow-hidden">
-          {/* We use a placeholder that looks like a skyline/workers background */}
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542382103-605a22bbaf68?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-90 mix-blend-overlay"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent lg:via-transparent lg:bg-gradient-to-l"></div>
+          {/* Hero background image featuring Canada Flag */}
+          <div className="absolute inset-0 bg-[url('/hero-bg.png')] bg-cover bg-center"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent lg:bg-gradient-to-r lg:from-white lg:via-white/60 lg:to-transparent"></div>
         </div>
       </div>
     </div>
