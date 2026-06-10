@@ -1,4 +1,5 @@
-import { getSession, logoutAction } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
+import { logoutAction } from "@/app/actions/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { User, LogOut, Home, MessageSquare } from "lucide-react";
